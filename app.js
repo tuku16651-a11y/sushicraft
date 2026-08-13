@@ -1,12 +1,12 @@
 /* =============================================
-   SUSHI KATANA — APP.JS
+   SUSHI CRAFT — APP.JS
    ============================================= */
 
 'use strict';
 
 // ─── Constants ───────────────────────────────
 const WA_NUMBER = '994559406018';
-const PAGE_SCROLL_MAP = {};   // page -> scrollY before leaving
+const PAGE_SCROLL_MAP = {};
 let currentPage = 'home';
 let currentModalProduct = null;
 let currentVacancy = null;
@@ -14,202 +14,91 @@ let cart = [];
 
 // ─── DATA ─────────────────────────────────────
 
+const MENU_IMG = 'images/sushi-menu.jpg';
+
 const menuData = {
-  sets: [
-    {
-      id: 's1',
-      name: 'Set N1 — Super Təklif',
-      desc: '70 əd. müxtəlif suşi + 1L Coca-Cola pulsuz! Böyük yığıncaqlar üçün ideal seçim.',
-      price: 29,
-      weight: '70 əd. + 1L Cola',
-      img: 'images/set-n1.jpg',
-      badge: 'Super Təklif'
-    },
-    {
-      id: 's2',
-      name: 'Set N3',
-      desc: '30 əd. müxtəlif suşi — California, Philadelphia, Hot Crab, Hot Salmon, Baked, Maki daxildir.',
-      price: 19,
-      weight: '30 əd.',
-      img: 'images/set-n3.jpg',
-      badge: 'Populyar'
-    },
-    {
-      id: 's3',
-      name: 'Sushi Premium Set',
-      desc: 'Klassik Nigiri, Maki, California Roll — hər şey bir yerdə. Suşi sevənlər üçün ideal set.',
-      price: 29,
-      weight: '6 növ, hər birindən',
-      img: 'images/menu-hero.jpg',
-      badge: 'Klassik'
-    }
-  ],
   rolls: [
     {
       id: 'r1',
-      name: 'California Roll',
-      desc: 'Krab əti, avokado, salatalıq, tobiko kürüsü ilə hazırlanmış klassik uramaki roll.',
-      price: 8,
+      name: 'Chips Roll',
+      desc: 'Xüsusi chips roll — xırtıldayan, dadlı və doyurucu.',
+      price: 10,
       weight: '8 əd.',
-      img: 'images/menu-hero.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r2',
-      name: 'Philadelphia Roll',
-      desc: 'Krem pendir, somon, avokado ilə hazırlanmış zəngin dadlı uramaki roll.',
-      price: 9,
+      name: 'Cheese Roll',
+      desc: 'Kremli pendir içlikli xüsusi roll.',
+      price: 10,
       weight: '8 əd.',
-      img: 'images/gallery1.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r3',
-      name: 'Hot Crab Roll',
-      desc: 'İsti qızardılmış krab içlikli, xüsusi Katana sousu ilə servis edilən roll.',
-      price: 8,
+      name: 'Tamago Roll',
+      desc: 'Yapon yumurtası ilə hazırlanmış xüsusi tamago roll.',
+      price: 10,
       weight: '8 əd.',
-      img: 'images/set-n3.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r4',
-      name: 'Hot Salmon Roll',
-      desc: 'Qızardılmış somon içlikli, wasabi mayonezi ilə servis edilən isti roll.',
-      price: 8,
+      name: 'Baked Roll',
+      desc: 'Fırında bişirilmiş kremli sousu ilə xüsusi roll.',
+      price: 7,
       weight: '8 əd.',
-      img: 'images/menu-hero.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r5',
-      name: 'Baked Roll',
-      desc: 'Fırında bişirilmiş, kremli pendir sousu ilə örtülmüş xüsusi Katana rollları.',
-      price: 9,
+      name: 'Kaliforniya Krab Roll',
+      desc: 'Krab əti ilə hazırlanmış klassik Kaliforniya roll.',
+      price: 10,
       weight: '8 əd.',
-      img: 'images/gallery1.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r6',
-      name: 'Spicy Tuna Roll',
-      desc: 'Ədviyyatlı ton balığı, xiyar, sriracha mayonezi ilə hazırlanmış qızğın roll.',
-      price: 9,
+      name: 'Unagi Roll',
+      desc: 'Unagi (şirin su balığı) ilə hazırlanmış xüsusi teriyaki roll.',
+      price: 10,
       weight: '8 əd.',
-      img: 'images/set-n3.jpg'
+      img: MENU_IMG
     },
     {
       id: 'r7',
-      name: 'Dragon Roll',
-      desc: 'Karides tempura, avokado, unagi sousu ilə hazırlanmış vizual cəhətdən möhtəşəm roll.',
-      price: 11,
+      name: 'Sezar Roll',
+      desc: 'Sezar sousu ilə hazırlanmış xüsusi roll.',
+      price: 9,
       weight: '8 əd.',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'r8',
-      name: 'Rainbow Roll',
-      desc: 'Krab, avokado California rollu üzərinə somon, ton balığı, karides diləmləri ilə.',
-      price: 12,
-      weight: '8 əd.',
-      img: 'images/gallery1.jpg'
-    }
-  ],
-  nigiri: [
-    {
-      id: 'n1',
-      name: 'Somon Nigiri',
-      desc: 'Təzə Atlantik somonundan hazırlanmış, əl ilə yoğurulmuş pirinc üzərində nigiri.',
-      price: 5,
-      weight: '2 əd.',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'n2',
-      name: 'Ton Balığı Nigiri',
-      desc: 'Premium Bluefin ton balığından hazırlanmış, xüsusi mari sousu ilə servis.',
-      price: 6,
-      weight: '2 əd.',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'n3',
-      name: 'Karides Nigiri',
-      desc: 'Bişirilmiş böyük karides, pirinc üzərində incə nori ilə bağlanmış nigiri.',
-      price: 5,
-      weight: '2 əd.',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'n4',
-      name: 'Unagi Nigiri',
-      desc: 'Şirin-şor teriyaki sousu ilə şüyüdlənmiş tərəvəz balığı (unagi) nigiris.',
-      price: 7,
-      weight: '2 əd.',
-      img: 'images/menu-hero.jpg'
+      img: MENU_IMG
     }
   ],
   maki: [
     {
       id: 'm1',
-      name: 'Maki Salmon',
-      desc: 'Təzə somon və nori dərinliyindən hazırlanmış sadə, lakin dadlı klassik maki rollları.',
-      price: 5,
-      weight: '10 əd.',
-      img: 'images/menu-hero.jpg'
+      name: 'Saki Maki',
+      desc: 'Təzə somon ilə hazırlanmış klassik maki rollları.',
+      price: 6,
+      weight: '6 əd.',
+      img: MENU_IMG
     },
     {
       id: 'm2',
-      name: 'Maki Ton Balığı',
-      desc: 'Premium ton balığı ilə hazırlanmış ənənəvi Yapon maki rollları.',
-      price: 5,
-      weight: '10 əd.',
-      img: 'images/menu-hero.jpg'
+      name: 'Krivetka Maki',
+      desc: 'Karides ilə hazırlanmış ənənəvi maki rollları.',
+      price: 6,
+      weight: '6 əd.',
+      img: MENU_IMG
     },
     {
       id: 'm3',
-      name: 'Maki Xiyar',
-      desc: 'Kappa maki — vegeterian seçimi, təzə xiyar ilə hazırlanmış yüngül maki rollları.',
-      price: 4,
-      weight: '10 əd.',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'm4',
-      name: 'Maki Avokado',
-      desc: 'Kremli avokado ilə hazırlanmış bitki əsaslı yüngül maki rollları.',
-      price: 4,
-      weight: '10 əd.',
-      img: 'images/menu-hero.jpg'
-    }
-  ],
-  drinks: [
-    {
-      id: 'd1',
-      name: 'Coca-Cola',
-      desc: 'Klassik Coca-Cola — suşi ilə mükəmməl cütlük.',
-      price: 2,
-      weight: '0.33L',
-      img: 'images/set-n1.jpg'
-    },
-    {
-      id: 'd2',
-      name: 'Coca-Cola 1L',
-      desc: 'Böyük Coca-Cola, setlər üçün ideal seçim.',
-      price: 4,
-      weight: '1L',
-      img: 'images/set-n1.jpg'
-    },
-    {
-      id: 'd3',
-      name: 'Yaşıl Çay',
-      desc: 'Ənənəvi Yapon yaşıl çayı — suşi ilə klassik kombinasiya.',
-      price: 3,
-      weight: '400ml',
-      img: 'images/menu-hero.jpg'
-    },
-    {
-      id: 'd4',
-      name: 'Miso Şorba',
-      desc: 'Ənənəvi Yapon miso şorbasıı, tofu və dəniz yosunu ilə.',
-      price: 4,
-      weight: '350ml',
-      img: 'images/menu-hero.jpg'
+      name: 'Kappa Maki',
+      desc: 'Xiyar ilə hazırlanmış vegeterian maki rollları.',
+      price: 6,
+      weight: '6 əd.',
+      img: MENU_IMG
     }
   ]
 };
@@ -258,8 +147,8 @@ const vacanciesData = [
     salary: '800 – 1200 AZN',
     schedule: 'Dəyişən növbə (2/2)',
     requirements: 'Ən az 1 il suşi hazırlama təcrübəsi, gigiyena sertifikatı',
-    desc: 'Katana mütbəxinə peşəkar suşi ustad axtarırıq. Kreativlik, dəqiqlik və komanda ruhu vacibdir.',
-    duties: 'Menyu maddələrinin hazırlanması, freshness nəzarəti, müştəri sifarişlərinin icrasını'
+    desc: 'Sushi Craft mütbəxinə peşəkar suşi ustad axtarırıq. Kreativlik, dəqiqlik və komanda ruhu vacibdir.',
+    duties: 'Menyu maddələrinin hazırlanması, freshness nəzarəti, müştəri sifarişlərinin icrası'
   },
   {
     id: 'v2',
@@ -301,7 +190,6 @@ const vacanciesData = [
 function showPage(pageId) {
   const oldPage = document.getElementById('page-' + currentPage);
   if (oldPage) {
-    // Save scroll position of current page
     PAGE_SCROLL_MAP[currentPage] = window.scrollY;
     oldPage.classList.remove('active');
   }
@@ -312,18 +200,15 @@ function showPage(pageId) {
   if (!newPage) return;
   newPage.classList.add('active');
 
-  // Update nav active state
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.toggle('active', link.dataset.page === pageId);
   });
 
-  // Restore scroll position for the new page
   const savedScroll = PAGE_SCROLL_MAP[pageId] || 0;
   window.scrollTo({ top: savedScroll, behavior: 'instant' });
 }
 
 function goBack() {
-  // Save current scroll
   PAGE_SCROLL_MAP[currentPage] = window.scrollY;
   showPage('home');
 }
@@ -408,7 +293,6 @@ function renderCart() {
   emptyEl.style.display = isEmpty ? 'flex' : 'none';
   footerEl.style.display = isEmpty ? 'none' : 'block';
 
-  // Remove old items (not the empty notice)
   const existingItems = itemsEl.querySelectorAll('.cart-item');
   existingItems.forEach(el => el.remove());
 
@@ -416,7 +300,7 @@ function renderCart() {
     const div = document.createElement('div');
     div.className = 'cart-item';
     div.innerHTML = `
-      <img class="cart-item-img" src="${item.img}" alt="${escHtml(item.name)}" loading="lazy" onerror="this.src='images/menu-hero.jpg'" />
+      <img class="cart-item-img" src="${item.img}" alt="${escHtml(item.name)}" loading="lazy" onerror="this.src='images/sushi-menu.jpg'" />
       <div class="cart-item-info">
         <div class="cart-item-name">${escHtml(item.name)}</div>
         <div class="cart-item-price">${item.price * item.qty} AZN</div>
@@ -434,7 +318,7 @@ function renderCart() {
 function bumpCartCount() {
   const el = document.getElementById('cartCount');
   el.classList.remove('bump');
-  void el.offsetWidth; // reflow
+  void el.offsetWidth;
   el.classList.add('bump');
   setTimeout(() => el.classList.remove('bump'), 300);
 }
@@ -442,7 +326,7 @@ function bumpCartCount() {
 function sendOrder() {
   if (cart.length === 0) return;
 
-  let msg = '🍱 *YENİ SİFARİŞ — Sushi Katana*\n\n';
+  let msg = '🍱 *YENİ SİFARİŞ — Sushi Craft*\n\n';
   msg += '━━━━━━━━━━━━━━━━━━━━\n';
   cart.forEach((item, idx) => {
     msg += `${idx + 1}. ${item.name}\n   ${item.qty} × ${item.price} AZN = ${item.qty * item.price} AZN\n`;
@@ -462,7 +346,7 @@ function renderMenuGrids() {
   Object.entries(menuData).forEach(([cat, items]) => {
     const grid = document.getElementById('grid-' + cat);
     if (!grid) return;
-    grid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     items.forEach(item => {
       const card = document.createElement('div');
       card.className = 'menu-card';
@@ -477,7 +361,7 @@ function renderMenuGrids() {
       card.innerHTML = `
         <div class="menu-card-img">
           ${badgeHtml}
-          <img src="${item.img}" alt="${escHtml(item.name)}" loading="lazy" onerror="this.src='images/menu-hero.jpg'" />
+          <img src="${item.img}" alt="${escHtml(item.name)}" loading="lazy" onerror="this.src='images/sushi-menu.jpg'" />
         </div>
         <div class="menu-card-body">
           <div class="menu-card-name">${escHtml(item.name)}</div>
@@ -491,8 +375,9 @@ function renderMenuGrids() {
 
       card.addEventListener('click', () => openProductModal(item));
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openProductModal(item); });
-      grid.appendChild(card);
+      fragment.appendChild(card);
     });
+    grid.appendChild(fragment);
   });
 }
 
@@ -532,7 +417,8 @@ function closeProductModalBtn() {
 
 function renderFaq() {
   const list = document.getElementById('faqList');
-  faqData.forEach((item, i) => {
+  const fragment = document.createDocumentFragment();
+  faqData.forEach((item) => {
     const el = document.createElement('div');
     el.className = 'faq-item';
     el.innerHTML = `
@@ -544,14 +430,14 @@ function renderFaq() {
         <div class="faq-a-inner">${escHtml(item.a)}</div>
       </div>
     `;
-    list.appendChild(el);
+    fragment.appendChild(el);
   });
+  list.appendChild(fragment);
 }
 
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
   const isOpen = item.classList.contains('open');
-  // Close all
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
@@ -560,6 +446,7 @@ function toggleFaq(btn) {
 
 function renderVacancies() {
   const grid = document.getElementById('vacancyGrid');
+  const fragment = document.createDocumentFragment();
   vacanciesData.forEach(v => {
     const card = document.createElement('div');
     card.className = 'vacancy-card';
@@ -576,8 +463,9 @@ function renderVacancies() {
     `;
     card.addEventListener('click', () => openVacancyModal(v));
     card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openVacancyModal(v); });
-    grid.appendChild(card);
+    fragment.appendChild(card);
   });
+  grid.appendChild(fragment);
 }
 
 // ─── VACANCY MODAL ────────────────────────────
@@ -611,7 +499,7 @@ function closeVacancyModalBtn() {
 
 function applyVacancy() {
   if (!currentVacancy) return;
-  const msg = `👋 *Vakansiyaya Müraciət — Sushi Katana*\n\n🔹 *Vəzifə:* ${currentVacancy.title}\n🔹 *İş rejimi:* ${currentVacancy.type}\n\nSalam! Bu vakansiya ilə maraqlanıram. Əlaqə saxlamaq istəyirəm.`;
+  const msg = `👋 *Vakansiyaya Müraciət — Sushi Craft*\n\n🔹 *Vəzifə:* ${currentVacancy.title}\n🔹 *İş rejimi:* ${currentVacancy.type}\n\nSalam! Bu vakansiya ilə maraqlanıram. Əlaqə saxlamaq istəyirəm.`;
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }
 
@@ -632,7 +520,7 @@ function submitReservation(e) {
   }
 
   const formattedDate = formatDate(date);
-  let msg = `📅 *REZERVASIYA — Sushi Katana*\n\n`;
+  let msg = `📅 *REZERVASIYA — Sushi Craft*\n\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━\n`;
   msg += `👤 *Ad, Soyad:* ${name}\n`;
   msg += `📞 *Telefon:* ${phone}\n`;
@@ -662,6 +550,7 @@ function closeLightbox() {
 
 // ─── TOAST ────────────────────────────────────
 
+let toastTimer = null;
 function showToast(msg) {
   let toast = document.querySelector('.toast');
   if (!toast) {
@@ -671,7 +560,8 @@ function showToast(msg) {
   }
   toast.textContent = msg;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2800);
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
 // ─── UTILS ────────────────────────────────────
@@ -719,7 +609,6 @@ document.addEventListener('DOMContentLoaded', function() {
   renderVacancies();
   renderCart();
 
-  // Set min date for reservation to today
   const today = new Date().toISOString().split('T')[0];
   const resDate = document.getElementById('resDate');
   if (resDate) resDate.min = today;
